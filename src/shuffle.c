@@ -104,12 +104,16 @@ static void
 random_shuffle_array (void **a, size_t len)
 {
   size_t i;
-  for (i = 0; i < len; i++)
+
+  if (len <= 1)
+    return;
+
+  for (i = len - 1; i >= 1; i--)
     {
       void *t;
 
       /* Pick random element and swap. */
-      unsigned int j = make_rand () % len;
+      unsigned int j = make_rand () % (i + 1);
       if (i == j)
         continue;
 
