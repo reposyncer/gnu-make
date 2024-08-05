@@ -557,9 +557,8 @@ child_error (struct child *child,
     {
 #define SHUFFLE_PREFIX " shuffle="
       char *a = alloca (CSTRLEN(SHUFFLE_PREFIX) + strlen (smode) + 1);
-      sprintf (a, SHUFFLE_PREFIX "%s", smode);
+      l += sprintf (a, SHUFFLE_PREFIX "%s", smode);
       smode = a;
-      l += strlen (smode);
 #undef SHUFFLE_PREFIX
     }
 

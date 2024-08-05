@@ -425,13 +425,9 @@ message (int prefix, size_t len, const char *fmt, ...)
   start = p = get_buffer (len);
 
   if (prefix)
-    {
-      if (makelevel == 0)
-        sprintf (p, "%s: ", program);
-      else
-        sprintf (p, "%s[%u]: ", program, makelevel);
-      p += strlen (p);
-    }
+    p += (makelevel == 0
+          ? sprintf (p, "%s: ", program)
+          : sprintf (p, "%s[%u]: ", program, makelevel));
 
   va_start (args, fmt);
   vsprintf (p, fmt, args);
@@ -457,13 +453,11 @@ error (const floc *flocp, size_t len, const char *fmt, ...)
           + INTSTR_LENGTH + 4 + 1 + 1);
   start = p = get_buffer (len);
 
-  if (flocp && flocp->filenm)
-    sprintf (p, "%s:%lu: ", flocp->filenm, flocp->lineno + flocp->offset);
-  else if (makelevel == 0)
-    sprintf (p, "%s: ", program);
-  else
-    sprintf (p, "%s[%u]: ", program, makelevel);
-  p += strlen (p);
+  p += (flocp && flocp->filenm
+        ? sprintf (p, "%s:%lu: ", flocp->filenm, flocp->lineno + flocp->offset)
+        : makelevel == 0
+        ? sprintf (p, "%s: ", program)
+        : sprintf (p, "%s[%u]: ", program, makelevel));
 
   va_start (args, fmt);
   vsprintf (p, fmt, args);
@@ -490,13 +484,12 @@ fatal (const floc *flocp, size_t len, const char *fmt, ...)
           + INTSTR_LENGTH + 8 + strlen (stop) + 1);
   start = p = get_buffer (len);
 
-  if (flocp && flocp->filenm)
-    sprintf (p, "%s:%lu: *** ", flocp->filenm, flocp->lineno + flocp->offset);
-  else if (makelevel == 0)
-    sprintf (p, "%s: *** ", program);
-  else
-    sprintf (p, "%s[%u]: *** ", program, makelevel);
-  p += strlen (p);
+  p += (flocp && flocp->filenm
+        ? sprintf (p, "%s:%lu: *** ", flocp->filenm,
+                   flocp->lineno + flocp->offset)
+        : makelevel == 0
+        ? sprintf (p, "%s: *** ", program)
+        : sprintf (p, "%s[%u]: *** ", program, makelevel));
 
   va_start (args, fmt);
   vsprintf (p, fmt, args);

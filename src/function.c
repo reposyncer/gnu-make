@@ -737,8 +737,7 @@ func_words (char *o, char **argv, const char *funcname UNUSED)
   while (find_next_token (&word_iterator, NULL) != 0)
     ++i;
 
-  sprintf (buf, "%u", i);
-  o = variable_buffer_output (o, buf, strlen (buf));
+  o = variable_buffer_output (o, buf, sprintf (buf, "%u", i));
 
   return o;
 }
@@ -2659,8 +2658,7 @@ func_call (char *o, char **argv, const char *funcname UNUSED)
     {
       char num[INTSTR_LENGTH];
 
-      sprintf (num, "%u", i);
-      define_variable (num, strlen (num), *argv, o_automatic, 0);
+      define_variable (num, sprintf (num, "%u", i), *argv, o_automatic, 0);
     }
 
   /* If the number of arguments we have is < max_args, it means we're inside
@@ -2672,8 +2670,7 @@ func_call (char *o, char **argv, const char *funcname UNUSED)
     {
       char num[INTSTR_LENGTH];
 
-      sprintf (num, "%u", i);
-      define_variable (num, strlen (num), "", o_automatic, 0);
+      define_variable (num, sprintf (num, "%u", i), "", o_automatic, 0);
     }
 
   /* Expand the function in the context of the arguments, adding the result to

@@ -3587,10 +3587,11 @@ define_makeflags (int makefile)
             {
               /* Add the value if not omitted.  */
               char *buf = alloca (30);
-              sprintf (buf, "%u", *(unsigned int *) cs->value_ptr);
+              int buflen = sprintf (buf, "%u",
+                                    *(unsigned int *) cs->value_ptr);
               if (!short_option (cs->c))
                 fp = variable_buffer_output (fp, "=", 1);
-              fp = variable_buffer_output (fp, buf, strlen (buf));
+              fp = variable_buffer_output (fp, buf, buflen);
             }
           break;
 
@@ -3603,10 +3604,10 @@ define_makeflags (int makefile)
               || (*(double *) cs->value_ptr != *(double *) cs->noarg_value))
             {
               char *buf = alloca (100);
-              sprintf (buf, "%g", *(double *) cs->value_ptr);
+              int buflen = sprintf (buf, "%g", *(double *) cs->value_ptr);
               if (!short_option (cs->c))
                 fp = variable_buffer_output (fp, "=", 1);
-              fp = variable_buffer_output (fp, buf, strlen (buf));
+              fp = variable_buffer_output (fp, buf, buflen);
             }
           break;
 
