@@ -2109,7 +2109,7 @@ abspath (const char *name, char *apath)
           apath[3] = '/';
           dest++;
           root_len++;
-          /* strncpy above copied one character too many.  */
+          /* memcpy above copied one character too many.  */
           name--;
         }
       else
@@ -2178,13 +2178,13 @@ func_realpath (char *o, char **argv, const char *funcname UNUSED)
     {
       if (len < GET_PATH_MAX)
         {
-          char *rp;
+          char *rp, *inend;
           struct stat st;
           PATH_VAR (in);
           PATH_VAR (out);
 
-          strncpy (in, path, len);
-          in[len] = '\0';
+          inend = mempcpy (in, path, len);
+          *inend = '\0';
 
 #ifdef HAVE_REALPATH
           ENULLLOOP (rp, realpath (in, out));
@@ -2353,9 +2353,9 @@ func_abspath (char *o, char **argv, const char *funcname UNUSED)
         {
           PATH_VAR (in);
           PATH_VAR (out);
+          char *inend = mempcpy (in, path, len);
 
-          strncpy (in, path, len);
-          in[len] = '\0';
+          *inend = '\0';
 
           if (abspath (in, out))
             {

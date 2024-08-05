@@ -351,7 +351,7 @@ xstrndup (const char *str, size_t length)
 #else
   result = xmalloc (length + 1);
   if (length > 0)
-    strncpy (result, str, length);
+    memcpy (result, str, length);
   result[length] = '\0';
 #endif
 
