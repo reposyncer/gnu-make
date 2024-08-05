@@ -1080,12 +1080,15 @@ find_and_set_default_shell (const char *token)
 
           while (ep && *ep)
             {
+              int sh_pathlen;
               PATH_VAR (sh_path);
 
               *ep = '\0';
 
-              snprintf (sh_path, GET_PATH_MAX, "%s/%s", p, search_token);
-              if (_access (sh_path, 0) == 0)
+              sh_pathlen = snprintf (sh_path, GET_PATH_MAX, "%s/%s",
+                                     p, search_token);
+              if (0 <= sh_pathlen && sh_pathlen < GET_PATH_MAX
+                  && _access (sh_path, 0) == 0)
                 {
                   default_shell = xstrdup (w32ify (sh_path, 0));
                   sh_found = 1;
@@ -1106,9 +1109,13 @@ find_and_set_default_shell (const char *token)
           /* be sure to check last element of Path */
           if (p && *p)
             {
+              int sh_pathlen;
+
               PATH_VAR (sh_path);
-              snprintf (sh_path, GET_PATH_MAX, "%s/%s", p, search_token);
-              if (_access (sh_path, 0) == 0)
+              sh_pathlen = snprintf (sh_path, GET_PATH_MAX, "%s/%s",
+                                     p, search_token);
+              if (0 <= sh_pathlen && sh_pathlen < GET_PATH_MAX
+                  && _access (sh_path, 0) == 0)
                 {
                   default_shell = xstrdup (w32ify (sh_path, 0));
                   sh_found = 1;
