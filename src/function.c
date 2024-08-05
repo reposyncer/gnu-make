@@ -2119,7 +2119,7 @@ abspath (const char *name, char *apath)
 
   for (start = end = name; *start != '\0'; start = end)
     {
-      size_t len;
+      ptrdiff_t len;
 
       /* Skip sequence of multiple path-separators.  */
       while (ISDIRSEP (*start))
@@ -2147,7 +2147,7 @@ abspath (const char *name, char *apath)
           if (! ISDIRSEP (dest[-1]))
             *dest++ = '/';
 
-          if (dest + len >= apath_limit)
+          if (apath_limit - dest <= len)
             return NULL;
 
           dest = mempcpy (dest, start, len);
