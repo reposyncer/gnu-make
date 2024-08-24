@@ -6,8 +6,8 @@ on:
   workflow_dispatch:  # This allows the workflow to be manually triggered
 
 env:
-  NAME: repo-name-here
-  URL: repo-url-here
+  NAME: gnu-make
+  URL: https://git.savannah.gnu.org/git/make.git
 
 jobs:
   sync-repo:
