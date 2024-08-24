@@ -1,9 +1,5 @@
-# clone
-TEMPLATE for cloning and making mirrors
+# gnu-make
+Weekly synced mirror of gnu's make.
 
-## Usage
-To use the `clone` template:
-
-1. Use the template.
-2. Change the `env` variables in [`.github/workflows/main.yml`](.github/workflows/main.yml) to the desired variables.
-3. You are done!
+> [!IMPORTANT]\
+> The source code can be found on the [`master`](https://github.com/reposyncer/gnu-make/tree/master) branch.
