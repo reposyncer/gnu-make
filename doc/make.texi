@@ -5262,16 +5262,17 @@ itself.  For instance, the @samp{-t}, @samp{-n}, and @samp{-q} options, if
 put in one of these variables, could have disastrous consequences and would
 certainly have at least surprising and probably annoying effects.
 
-If you'd like to run other implementations of @code{make} in addition
-to GNU @code{make}, and hence do not want to add GNU
-@code{make}-specific flags to the @code{MAKEFLAGS} variable, you can
-add them to the @code{GNUMAKEFLAGS} variable instead.  This variable
-is parsed just before @code{MAKEFLAGS}, in the same way as
-@code{MAKEFLAGS}.  When @code{make} constructs @code{MAKEFLAGS} to
-pass to a recursive @code{make} it will include all flags, even those
-taken from @code{GNUMAKEFLAGS}.  As a result, after parsing
-@code{GNUMAKEFLAGS} GNU @code{make} sets this variable to the empty
-string to avoid duplicating flags during recursion.
+If you'd like to run other implementations of @code{make} in addition to GNU
+Make, and hence do not want to add GNU Make-specific flags to your
+@code{MAKEFLAGS} environment variable, you can add them to the
+@code{GNUMAKEFLAGS} environment variable instead.  This is parsed just before
+@code{MAKEFLAGS}, in the same way as @code{MAKEFLAGS}.  When @code{make}
+constructs @code{MAKEFLAGS} to pass to a recursive @code{make} it will include
+all flags, even those taken from @code{GNUMAKEFLAGS}.  As a result, after
+parsing @code{GNUMAKEFLAGS} GNU Make sets this variable to the empty string to
+avoid duplicating flags during recursion.  Only @code{GNUMAKEFLAGS}
+environment variables are treated specially: setting the @code{make} variable
+@code{GNUMAKEFLAGS} has no effect.
 
 It's best to use @code{GNUMAKEFLAGS} only with flags which won't
 materially change the behavior of your makefiles.  If your makefiles
