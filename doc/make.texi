@@ -4380,11 +4380,17 @@ Disable, ,Disabling Parallel Execution}).
 On MS-DOS, the @samp{-j} option has no effect, since that system doesn't
 support multi-processing.
 
-If the @samp{-j} option is followed by an integer, this is the number of
-recipes to execute at once; this is called the number of @dfn{job slots}.
-If there is nothing looking like an integer after the @samp{-j} option,
-there is no limit on the number of job slots.  The default number of job
-slots is one, which means serial execution (one thing at a time).
+Providing @samp{-j} with no argument tells @code{make} that it should run as
+many jobs in parallel as are allowed by the dependency graph.  This is usually
+not what you want as it can overload your system very quickly.  For example
+suppose you have a large program that is built from 900 object files.  Since
+object files normally do not depend on each other, using @samp{-j} by itself
+will attempt to create all 900 object files in parallel, starting 900
+instances of the compiler in simultaneously.  However, @samp{-j} with no
+argument is useful in conjunction with @samp{-l} (see below).
+
+If the @samp{-j} option is followed by an integer, this is the maximum number
+of recipes to execute at once; this is called the number of @dfn{job slots}.
 
 Handling recursive @code{make} invocations raises issues for parallel
 execution.  For more information on this, see @ref{Options/Recursion,
@@ -9746,10 +9752,10 @@ You can examine the current list of directories to be searched via the
 @itemx --jobs[=@var{jobs}]
 @cindex @code{--jobs}
 Specifies the number of recipes (jobs) to run simultaneously.  With no
-argument, @code{make} runs as many recipes simultaneously as possible.
-If there is more than one @samp{-j} option, the last one is effective.
-@xref{Parallel, ,Parallel Execution}, for more information on how
-recipes are run.  Note that this option is ignored on MS-DOS.
+argument, @code{make} runs as many recipes simultaneously as are allowed by
+the dependency graph.  If there is more than one @samp{-j} option, the last
+one is effective.  @xref{Parallel, ,Parallel Execution}, for more information
+on how recipes are run.  Note that this option is ignored on MS-DOS.
 
 @item --jobserver-style=[@var{style}]
 @cindex @code{--jobserver-style}
@@ -12644,6 +12650,13 @@ value is described in the sections below.
 Be aware that the @code{MAKEFLAGS} variable may contain multiple instances of
 the @code{--jobserver-auth=} option.  Only the @emph{last} instance is
 relevant.
+
+Remember that GNU Make does not create a jobserver at all if the user requests
+``infinite parallelism'' by using @samp{-j} with no argument limiting the
+number of job slots.  In this situation there's no maximum number of job
+slots, thus no need for a jobserver, and there will be no
+@samp{--jobserver-auth} option in @code{MAKEFLAGS}: every instance of
+@code{make} can invoke as many jobs in parallel as it likes.
 
 Second, every command @code{make} starts has one implicit job slot
 reserved for it before it starts.  Any tool which wants to participate
