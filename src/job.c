@@ -2727,50 +2727,50 @@ construct_command_argv_internal (char *line, char **restp, const char *shell,
        DOS_CHARS also include characters special to 4DOS/NDOS, so we
        won't have to tell one from another and have one more set of
        commands and special characters.  */
-  static const char *sh_chars_dos = "*?[];|<>%^&()";
-  static const char *sh_cmds_dos[] =
+  static const char *const sh_chars_dos = "*?[];|<>%^&()";
+  static const char *const sh_cmds_dos[] =
     { "break", "call", "cd", "chcp", "chdir", "cls", "copy", "ctty", "date",
       "del", "dir", "echo", "erase", "exit", "for", "goto", "if", "md",
       "mkdir", "path", "pause", "prompt", "rd", "rmdir", "rem", "ren",
       "rename", "set", "shift", "time", "type", "ver", "verify", "vol", ":",
       0 };
 
-  static const char *sh_chars_sh = "#;\"*?[]&|<>(){}$`^";
-  static const char *sh_cmds_sh[] =
+  static const char *const sh_chars_sh = "#;\"*?[]&|<>(){}$`^";
+  static const char *const sh_cmds_sh[] =
     { "cd", "echo", "eval", "exec", "exit", "login", "logout", "set", "umask",
       "wait", "while", "for", "case", "if", ":", ".", "break", "continue",
       "export", "read", "readonly", "shift", "times", "trap", "switch",
       "unset", "ulimit", "command", 0 };
 
   const char *sh_chars;
-  const char **sh_cmds;
+  const char *const *sh_cmds;
 
 #elif MK_OS_OS2
-  static const char *sh_chars_dos = "*?[];|<>%^&()";
-  static const char *sh_cmds_dos[] =
+  static const char *const sh_chars_dos = "*?[];|<>%^&()";
+  static const char *const sh_cmds_dos[] =
     { "break", "call", "cd", "chcp", "chdir", "cls", "copy", "ctty", "date",
       "del", "dir", "echo", "erase", "exit", "for", "goto", "if", "md",
       "mkdir", "path", "pause", "prompt", "rd", "rmdir", "rem", "ren",
       "rename", "set", "shift", "time", "type", "ver", "verify", "vol", ":",
       0 };
 
-  static const char *sh_chars_os2 = "*?[];|<>%^()\"'&";
-  static const char *sh_cmds_os2[] =
+  static const char *const sh_chars_os2 = "*?[];|<>%^()\"'&";
+  static const char *const sh_cmds_os2[] =
     { "call", "cd", "chcp", "chdir", "cls", "copy", "date", "del", "detach",
       "dir", "echo", "endlocal", "erase", "exit", "for", "goto", "if", "keys",
       "md", "mkdir", "move", "path", "pause", "prompt", "rd", "rem", "ren",
       "rename", "rmdir", "set", "setlocal", "shift", "start", "time", "type",
       "ver", "verify", "vol", ":", 0 };
 
-  static const char *sh_chars_sh = "#;\"*?[]&|<>(){}$`^~'";
-  static const char *sh_cmds_sh[] =
+  static const char *const sh_chars_sh = "#;\"*?[]&|<>(){}$`^~'";
+  static const char *const sh_cmds_sh[] =
     { "echo", "cd", "eval", "exec", "exit", "login", "logout", "set", "umask",
       "wait", "while", "for", "case", "if", ":", ".", "break", "continue",
       "export", "read", "readonly", "shift", "times", "trap", "switch",
       "unset", "command", 0 };
 
   const char *sh_chars;
-  const char **sh_cmds;
+  const char *const *sh_cmds;
 
 #elif MK_OS_W32
   /* We used to have a double quote (") in sh_chars_dos[] below, but
@@ -2780,17 +2780,17 @@ construct_command_argv_internal (char *line, char **restp, const char *shell,
      can handle quoted file names just fine, removing the quote lifts
      the limit from a very frequent use case, because using quoted
      file names is commonplace on MS-Windows.  */
-  static const char *sh_chars_dos = "|&<>";
-  static const char *sh_cmds_dos[] =
+  static const char *const sh_chars_dos = "|&<>";
+  static const char *const sh_cmds_dos[] =
     { "assoc", "break", "call", "cd", "chcp", "chdir", "cls", "color", "copy",
       "ctty", "date", "del", "dir", "echo", "echo.", "endlocal", "erase",
-      "exit", "for", "ftype", "goto", "if", "if", "md", "mkdir", "move",
+      "exit", "for", "ftype", "goto", "if", "md", "mkdir", "move",
       "path", "pause", "prompt", "rd", "rem", "ren", "rename", "rmdir",
       "set", "setlocal", "shift", "time", "title", "type", "ver", "verify",
       "vol", ":", 0 };
 
-  static const char *sh_chars_sh = "#;\"*?[]&|<>(){}$`^";
-  static const char *sh_cmds_sh[] =
+  static const char *const sh_chars_sh = "#;\"*?[]&|<>(){}$`^";
+  static const char *const sh_cmds_sh[] =
     { "cd", "eval", "exec", "exit", "login", "logout", "set", "umask", "wait",
       "while", "for", "case", "if", ":", ".", "break", "continue", "export",
       "read", "readonly", "shift", "times", "trap", "switch", "test", "command",
@@ -2800,13 +2800,13 @@ construct_command_argv_internal (char *line, char **restp, const char *shell,
       0 };
 
   const char *sh_chars;
-  const char **sh_cmds;
+  const char *const *sh_cmds;
 #elif defined(__riscos__)
-  static const char *sh_chars = "";
-  static const char *sh_cmds[] = { 0 };
+  static const char *const sh_chars = "";
+  static const char *const sh_cmds[] = { 0 };
 #else  /* must be UNIX-ish */
-  static const char *sh_chars = "#;\"*?[]&|<>(){}$`^~!";
-  static const char *sh_cmds[] =
+  static const char *const sh_chars = "#;\"*?[]&|<>(){}$`^~!";
+  static const char *const sh_cmds[] =
     { ".", ":", "alias", "bg", "break", "case", "cd", "command", "continue",
       "eval", "exec", "exit", "export", "fc", "fg", "for", "getopts", "hash",
       "if", "jobs", "login", "logout", "read", "readonly", "return", "set",
@@ -2818,7 +2818,7 @@ construct_command_argv_internal (char *line, char **restp, const char *shell,
      MK_OS_W32) are compiled with HAVE_DOS_PATHS defined, which uses
      sh_chars_sh directly (see below).  The value must be identical
      to that of sh_chars immediately above.  */
-  static const char *sh_chars_sh =  "#;\"*?[]&|<>(){}$`^~!";
+  static const char *const sh_chars_sh =  "#;\"*?[]&|<>(){}$`^~!";
 # endif  /* HAVE_DOS_PATHS */
 #endif
   size_t i;

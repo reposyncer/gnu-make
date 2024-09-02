@@ -96,7 +96,7 @@ static struct conditionals *conditionals = &toplevel_conditionals;
 
 /* Default directories to search for include files in  */
 
-static const char *default_include_directories[] =
+static const char *const default_include_directories[] =
   {
 #if MK_OS_W32 && !defined(INCLUDEDIR)
 /* This completely up to the user when they install MSVC or other packages.
@@ -222,7 +222,7 @@ read_all_makefiles (const char **makefiles)
 
   if (num_makefiles == 0)
     {
-      static const char *default_makefiles[] =
+      static const char *const default_makefiles[] =
 #if MK_OS_VMS
         /* all lower case since readdir() (the vms version) 'lowercasifies' */
         /* TODO: Above is not always true, this needs more work */
@@ -234,7 +234,7 @@ read_all_makefiles (const char **makefiles)
         { "GNUmakefile", "makefile", "Makefile", 0 };
 #endif /* !MK_OS_VMS && !MK_OS_W32 */
 #endif /* MK_OS_VMS */
-      const char **p = default_makefiles;
+      const char *const *p = default_makefiles;
       while (*p != 0 && !file_exists_p (*p))
         ++p;
 
@@ -2925,6 +2925,7 @@ construct_include_path (const char **arg_dirs)
   /* Now add the standard default dirs at the end.  */
   if (!disable)
     {
+      const char *const *ccpp;
 #if MK_OS_DOS
       /* The environment variable $DJDIR holds the root of the DJGPP directory
          tree; add ${DJDIR}/include.  */
@@ -2942,20 +2943,20 @@ construct_include_path (const char **arg_dirs)
             max_incl_len = len;
         }
 #endif
-      for (cpp = default_include_directories; *cpp != 0; ++cpp)
+      for (ccpp = default_include_directories; *ccpp != 0; ++ccpp)
         {
           int e;
 
-          EINTRLOOP (e, stat (*cpp, &stbuf));
+          EINTRLOOP (e, stat (*ccpp, &stbuf));
           if (e == 0 && S_ISDIR (stbuf.st_mode))
             {
-              size_t len = strlen (*cpp);
+              size_t len = strlen (*ccpp);
               /* If dir name is written with trailing slashes, discard them.  */
-              while (len > 1 && (*cpp)[len - 1] == '/')
+              while (len > 1 && (*ccpp)[len - 1] == '/')
                 --len;
               if (len > max_incl_len)
                 max_incl_len = len;
-              dirs[idx++] = strcache_add_len (*cpp, len);
+              dirs[idx++] = strcache_add_len (*ccpp, len);
             }
         }
     }

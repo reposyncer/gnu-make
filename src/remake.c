@@ -1751,7 +1751,7 @@ name_mtime (const char *name)
 static const char *
 library_search (const char *lib, FILE_TIMESTAMP *mtime_ptr)
 {
-  static const char *dirs[] =
+  static const char *const dirs[] =
     {
       "/lib",
       "/usr/lib",
@@ -1779,7 +1779,7 @@ library_search (const char *lib, FILE_TIMESTAMP *mtime_ptr)
   /* Information about the earliest (in the vpath sequence) match.  */
   unsigned int best_vpath = 0, best_path = 0;
 
-  const char **dp;
+  const char *const *dp;
 
   libpatterns = allocated_expand_variable (STRING_SIZE_TUPLE (".LIBPATTERNS"));
 

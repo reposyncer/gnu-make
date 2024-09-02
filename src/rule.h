@@ -51,7 +51,7 @@ extern struct file *suffix_file;
 
 void snap_implicit_rules (void);
 void convert_to_pattern (void);
-void install_pattern_rule (struct pspec *p, int terminal);
+void install_pattern_rule (const struct pspec *p, int terminal);
 void create_pattern_rule (const char **targets, const char **target_percents,
                           unsigned short num, int terminal, struct dep *deps,
                           struct commands *commands, int override);

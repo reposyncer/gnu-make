@@ -33,7 +33,7 @@ static unsigned long round_up_2 __P((unsigned long rough));
    potentially hit every slot in the table during collision
    resolution.  */
 
-void *hash_deleted_item = &hash_deleted_item;
+const void *hash_deleted_item = &hash_deleted_item;
 
 /* Force the table size to be a power of two, possibly rounding up the
    given size.  */
@@ -65,10 +65,10 @@ hash_init (struct hash_table *ht, unsigned long size,
 /* Load an array of items into 'ht'.  */
 
 void
-hash_load (struct hash_table *ht, void *item_table,
+hash_load (struct hash_table *ht, const void *item_table,
            unsigned long cardinality, unsigned long size)
 {
-  char *items = (char *) item_table;
+  const char *items = (const char *) item_table;
   while (cardinality--)
     {
       hash_insert (ht, items);

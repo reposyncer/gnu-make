@@ -472,7 +472,7 @@ new_pattern_rule (struct rule *rule, int override)
    TERMINAL specifies what the 'terminal' field of the rule should be.  */
 
 void
-install_pattern_rule (struct pspec *p, int terminal)
+install_pattern_rule (const struct pspec *p, int terminal)
 {
   struct rule *r;
   const char *ptr;

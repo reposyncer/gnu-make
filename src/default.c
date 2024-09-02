@@ -36,7 +36,7 @@ this program.  If not, see <https://www.gnu.org/licenses/>.  */
    '.s' must come last, so that a '.o' file will be made from
    a '.c' or '.p' or ... file rather than from a .s file.  */
 
-static char default_suffixes[]
+static const char default_suffixes[]
 #if MK_OS_VMS
   /* VMS should include all UNIX/POSIX + some VMS extensions */
   = ".out .exe .a .olb .hlb .tlb .mlb .ln .o .obj .c .cxx .cc .cpp .pas .p \
@@ -53,7 +53,7 @@ static char default_suffixes[]
 .w .ch .web .sh .elc .el";
 #endif
 
-static struct pspec default_pattern_rules[] =
+static const struct pspec default_pattern_rules[] =
   {
 #if MK_OS_VMS
     { "(%)", "%",
@@ -93,7 +93,7 @@ static struct pspec default_pattern_rules[] =
     { 0, 0, 0 }
   };
 
-static struct pspec default_terminal_rules[] =
+static const struct pspec default_terminal_rules[] =
   {
 #if MK_OS_VMS
 
@@ -128,7 +128,7 @@ static struct pspec default_terminal_rules[] =
     { 0, 0, 0 }
   };
 
-static const char *default_suffix_rules[] =
+static const char *const default_suffix_rules[] =
   {
 #if MK_OS_VMS
     ".o",
@@ -398,7 +398,7 @@ static const char *default_suffix_rules[] =
     0, 0,
   };
 
-static const char *default_variables[] =
+static const char *const default_variables[] =
   {
 #if MK_OS_VMS
 #ifdef __ALPHA
@@ -707,7 +707,7 @@ set_default_suffixes (void)
 void
 install_default_suffix_rules ()
 {
-  const char **s;
+  const char *const *s;
 
   if (no_builtin_rules_flag)
     return;
@@ -734,7 +734,7 @@ install_default_suffix_rules ()
 void
 install_default_implicit_rules (void)
 {
-  struct pspec *p;
+  const struct pspec *p;
 
   if (no_builtin_rules_flag)
     return;
@@ -749,7 +749,7 @@ install_default_implicit_rules (void)
 void
 define_default_variables (void)
 {
-  const char **s;
+  const char *const *s;
 
   if (no_builtin_variables_flag)
     return;
@@ -761,7 +761,7 @@ define_default_variables (void)
 void
 undefine_default_variables (void)
 {
-  const char **s;
+  const char *const *s;
 
   for (s = default_variables; *s != 0; s += 2)
     undefine_variable_global (NILF, s[0], strlen (s[0]), o_default);

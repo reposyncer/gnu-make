@@ -2392,7 +2392,7 @@ static char *func_call (char *o, char **argv, const char *funcname);
 #define FT_ENTRY(_name, _min, _max, _exp, _func) \
   { { (_func) }, STRING_SIZE_TUPLE(_name), (_min), (_max), (_exp), 0, 0 }
 
-static struct function_table_entry function_table_init[] =
+static const struct function_table_entry function_table_init[] =
 {
  /*         Name            MIN MAX EXP? Function */
   FT_ENTRY ("abspath",       0,  1,  1,  func_abspath),
