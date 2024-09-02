@@ -412,6 +412,14 @@ is
 .B \-\-warn\-undefined\-variables
 A deprecated alternative for
 .BR \-\-warn=undefined-var .
+.TP 0.5i
+.B \-
+This option alone (not as an argument to the
+.B \-f
+option) is ignored, unless a target named
+.B \-
+is defined in the makefile, in which case that target is added to the makefile
+goals.
 .SH "EXIT STATUS"
 GNU Make exits with a status of zero if all makefiles were successfully parsed
 and no targets that were built failed.  A status of one will be returned

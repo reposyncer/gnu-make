@@ -5218,14 +5218,11 @@ not affect @code{MAKEFLAGS} if the special target @samp{.POSIX} appears
 in the makefile.  You probably do not care about this.)
 
 @vindex MFLAGS
-A similar variable @code{MFLAGS} exists also, for historical
-compatibility.  It has the same value as @code{MAKEFLAGS} except that it
-does not contain the command line variable definitions, and it always
-begins with a hyphen unless it is empty (@code{MAKEFLAGS} begins with a
-hyphen only when it begins with an option that has no single-letter
-version, such as @samp{--no-print-directory}).  @code{MFLAGS} was
-traditionally used explicitly in the recursive @code{make} command, like
-this:
+A similar variable @code{MFLAGS} exists also, for historical compatibility.
+It has the same value as @code{MAKEFLAGS} except that it does not contain the
+command line variable definitions, and it always begins with a hyphen unless
+it is empty.  @code{MFLAGS} was traditionally used explicitly in the recursive
+@code{make} command, like this:
 
 @example
 subsystem:
@@ -7502,7 +7499,7 @@ to date.
 Recall that @code{MAKEFLAGS} will put all single-letter options (such as
 @samp{-t}) into the first word, and that word will be empty if no
 single-letter options were given.  To work with this, it's helpful to add a
-value at the start to ensure there's a word: for example
+value at the start to ensure it's considered a word: for example
 @samp{-$(MAKEFLAGS)}.
 
 The @code{findstring} function determines whether one string appears as a
@@ -9582,6 +9579,20 @@ must have access to this location before it begins reading the makefiles.
 Here is a table of all the options @code{make} understands:
 
 @table @samp
+@item --
+@cindex @code{--}
+This signals the end of options.  Any subsequent command line arguments are
+considered to be @code{make} targets or variable assignments, even if they
+look like options.
+
+@item -
+@cindex @code{-}
+GNU Make treats a @code{-} option in a special way: if there is a target
+@code{-} defined in the makefile then that target will be built.  If there is
+no target @code{-} then this option is ignored.  This historical behavior
+supports the (deprecated) sub-@code{make} invocation style @samp{$(MAKE)
+-$(MAKEFLAGS)} (do not use this).
+
 @item -b
 @cindex @code{-b}
 @itemx -m
