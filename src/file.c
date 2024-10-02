@@ -432,7 +432,10 @@ remove_intermediates (int sig)
                   }
                 if (status < 0)
                   {
-                    perror_with_name ("\nunlink: ", f->name);
+                    if (doneany)
+                      fputs ("\n", stdout);
+                    fflush (stdout);
+                    perror_with_name ("unlink: ", f->name);
                     /* Start printing over.  */
                     doneany = 0;
                   }

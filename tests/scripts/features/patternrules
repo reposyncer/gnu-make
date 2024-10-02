@@ -672,5 +672,26 @@ $r%.x: $dollar\$(wordlist 1, 99, ${prefix}%${suffix}.1 ${prefix}%${suffix}.2); \
 }
 }
 
+# SV 66268. An error message about a failure to remove an intermediate file.
+run_make_test(q!
+all: hello.x
+%.x: b/%.q; $(info $@ from $<)
+b/%.q:; @mkdir b; touch $@; chmod -w b
+!, '', "hello.x from b/hello.q\nrm b/hello.q\n#MAKE#: unlink: b/hello.q: $ERR_unreadable_file\n");
+
+chmod(0754, 'b');
+unlink('b/hello.q');
+rmdir('b');
+
+run_make_test(q!
+all: hello.x
+%.x: b/%.q; $(info $@ from $<)
+b/%.q:; @mkdir b; touch $@; chmod -w b
+!, '-s', "hello.x from b/hello.q\n#MAKE#: unlink: b/hello.q: $ERR_unreadable_file\n");
+
+chmod(0754, 'b');
+unlink('b/hello.q');
+rmdir('b');
+
 # This tells the test driver that the perl test script executed properly.
 1;
