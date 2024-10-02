@@ -693,5 +693,16 @@ chmod(0754, 'b');
 unlink('b/hello.q');
 rmdir('b');
 
+# SV 66273. An explicitly mentioned prerequisite is not intermediate, even in
+# the case of double colon.
+unlink('hello.q', 'hello.x');
+run_make_test(q!
+all: hello.x
+%.x: %.q; $(info $@ from $<)
+hello.q::; touch $@
+!,
+              '', "touch hello.q\nhello.x from hello.q\n");
+unlink('hello.q');
+
 # This tells the test driver that the perl test script executed properly.
 1;

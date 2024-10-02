@@ -1129,6 +1129,9 @@ print_file (const void *item)
     puts (_("#  File is a prerequisite of .NOTINTERMEDIATE."));
   if (f->secondary)
     puts (_("#  File is secondary (prerequisite of .SECONDARY)."));
+  if (f->is_explicit)
+    puts (_("#  File is explicitly mentioned."));
+
   if (f->also_make != 0)
     {
       const struct dep *d;
